@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as PracticeRouteImport } from './routes/practice'
+import { Route as PomodoroRouteImport } from './routes/pomodoro'
 import { Route as NotesRouteImport } from './routes/notes'
 import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as IndexRouteImport } from './routes/index'
@@ -23,6 +24,11 @@ const RoadmapRoute = RoadmapRouteImport.update({
 const PracticeRoute = PracticeRouteImport.update({
   id: '/practice',
   path: '/practice',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PomodoroRoute = PomodoroRouteImport.update({
+  id: '/pomodoro',
+  path: '/pomodoro',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NotesRoute = NotesRouteImport.update({
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/assistant': typeof AssistantRoute
   '/notes': typeof NotesRoute
+  '/pomodoro': typeof PomodoroRoute
   '/practice': typeof PracticeRoute
   '/roadmap': typeof RoadmapRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assistant': typeof AssistantRoute
   '/notes': typeof NotesRoute
+  '/pomodoro': typeof PomodoroRoute
   '/practice': typeof PracticeRoute
   '/roadmap': typeof RoadmapRoute
 }
@@ -60,21 +68,36 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/assistant': typeof AssistantRoute
   '/notes': typeof NotesRoute
+  '/pomodoro': typeof PomodoroRoute
   '/practice': typeof PracticeRoute
   '/roadmap': typeof RoadmapRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/assistant' | '/notes' | '/practice' | '/roadmap'
+  fullPaths:
+    | '/'
+    | '/assistant'
+    | '/notes'
+    | '/pomodoro'
+    | '/practice'
+    | '/roadmap'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/assistant' | '/notes' | '/practice' | '/roadmap'
-  id: '__root__' | '/' | '/assistant' | '/notes' | '/practice' | '/roadmap'
+  to: '/' | '/assistant' | '/notes' | '/pomodoro' | '/practice' | '/roadmap'
+  id:
+    | '__root__'
+    | '/'
+    | '/assistant'
+    | '/notes'
+    | '/pomodoro'
+    | '/practice'
+    | '/roadmap'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AssistantRoute: typeof AssistantRoute
   NotesRoute: typeof NotesRoute
+  PomodoroRoute: typeof PomodoroRoute
   PracticeRoute: typeof PracticeRoute
   RoadmapRoute: typeof RoadmapRoute
 }
@@ -93,6 +116,13 @@ declare module '@tanstack/react-router' {
       path: '/practice'
       fullPath: '/practice'
       preLoaderRoute: typeof PracticeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pomodoro': {
+      id: '/pomodoro'
+      path: '/pomodoro'
+      fullPath: '/pomodoro'
+      preLoaderRoute: typeof PomodoroRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/notes': {
@@ -123,6 +153,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AssistantRoute: AssistantRoute,
   NotesRoute: NotesRoute,
+  PomodoroRoute: PomodoroRoute,
   PracticeRoute: PracticeRoute,
   RoadmapRoute: RoadmapRoute,
 }
