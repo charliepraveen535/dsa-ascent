@@ -1,5 +1,5 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { LayoutDashboard, Map, MessageSquareCode, NotebookPen, ListChecks, Moon, Sun, Terminal } from "lucide-react";
+import { LayoutDashboard, Map, MessageSquareCode, NotebookPen, ListChecks, Moon, Sun, Terminal, Timer } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ const NAV = [
   { to: "/practice", label: "Practice", icon: ListChecks },
   { to: "/assistant", label: "AI Assistant", icon: MessageSquareCode },
   { to: "/notes", label: "Notes", icon: NotebookPen },
+  { to: "/pomodoro", label: "Pomodoro", icon: Timer },
 ] as const;
 
 export function AppShell({ children }: { children: React.ReactNode }) {
