@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
-const MODEL = "google/gemini-2.0-flash-exp:free"; // free-tier friendly default; users can switch via env
+const MODEL = "google/gemini-2.5-flash-lite"; // reliable default; override via OPENROUTER_MODEL env
 
 type ChatMessage = { role: "system" | "user" | "assistant"; content: string };
 
