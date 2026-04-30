@@ -34,10 +34,14 @@ export const Route = createRootRoute({
       { name: "description", content: "A focused 30-day Data Structures & Algorithms plan with AI-powered question generation and a doubt solver." },
       { name: "author", content: "DSA Comeback" },
       { property: "og:title", content: "DSA Comeback — 30-day plan with AI" },
-      { property: "og:description", content: "A focused 30-day DSA plan with AI question generation and a doubt solver." },
+      { property: "og:description", content: "A focused 30-day Data Structures & Algorithms plan with AI-powered question generation and a doubt solver." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "DSA Comeback — 30-day plan with AI" },
+      { name: "twitter:description", content: "A focused 30-day Data Structures & Algorithms plan with AI-powered question generation and a doubt solver." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a7f61335-5a5a-4fd8-b119-c48cf516fa9f/id-preview-7398f2c2--1d50ea66-2073-4807-ac00-89ba80a94abf.lovable.app-1777528886253.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a7f61335-5a5a-4fd8-b119-c48cf516fa9f/id-preview-7398f2c2--1d50ea66-2073-4807-ac00-89ba80a94abf.lovable.app-1777528886253.png" },
     ],
     links: [
       {
