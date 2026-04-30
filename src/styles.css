@@ -55,23 +55,24 @@
 }
 
 :root {
-  --radius: 0.5rem;
+  --radius: 1rem;
 
-  /* Light: clean paper-ish */
-  --background: oklch(0.985 0.005 240);
-  --foreground: oklch(0.18 0.02 240);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.02 240);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.02 240);
-  --primary: oklch(0.72 0.18 155);
-  --primary-foreground: oklch(0.12 0.02 155);
-  --secondary: oklch(0.94 0.01 240);
-  --secondary-foreground: oklch(0.22 0.02 240);
-  --muted: oklch(0.95 0.008 240);
-  --muted-foreground: oklch(0.5 0.02 240);
-  --accent: oklch(0.92 0.04 200);
-  --accent-foreground: oklch(0.22 0.02 240);
+  /* Light: soft gray, not pure white */
+  --background: oklch(0.97 0.005 250);
+  --foreground: oklch(0.18 0.02 250);
+  --card: oklch(0.995 0.003 250);
+  --card-foreground: oklch(0.18 0.02 250);
+  --popover: oklch(0.995 0.003 250);
+  --popover-foreground: oklch(0.18 0.02 250);
+  --primary: oklch(0.72 0.19 152);
+  --primary-foreground: oklch(0.14 0.02 152);
+  --primary-glow: oklch(0.78 0.2 152);
+  --secondary: oklch(0.93 0.008 250);
+  --secondary-foreground: oklch(0.22 0.02 250);
+  --muted: oklch(0.94 0.006 250);
+  --muted-foreground: oklch(0.5 0.02 250);
+  --accent: oklch(0.7 0.18 250);
+  --accent-foreground: oklch(0.99 0 0);
   --destructive: oklch(0.6 0.22 25);
   --destructive-foreground: oklch(0.98 0 0);
   --success: oklch(0.7 0.17 155);
@@ -99,21 +100,22 @@
 }
 
 .dark {
-  /* Dark: terminal-inspired */
-  --background: oklch(0.16 0.015 250);
-  --foreground: oklch(0.94 0.01 240);
-  --card: oklch(0.2 0.018 250);
-  --card-foreground: oklch(0.94 0.01 240);
-  --popover: oklch(0.2 0.018 250);
-  --popover-foreground: oklch(0.94 0.01 240);
-  --primary: oklch(0.82 0.2 150);
-  --primary-foreground: oklch(0.14 0.02 150);
-  --secondary: oklch(0.26 0.02 250);
-  --secondary-foreground: oklch(0.94 0.01 240);
-  --muted: oklch(0.24 0.018 250);
-  --muted-foreground: oklch(0.65 0.02 240);
-  --accent: oklch(0.3 0.04 200);
-  --accent-foreground: oklch(0.94 0.01 240);
+  /* Dark: #0B0F14 bg, #111827 cards, green + blue accents */
+  --background: oklch(0.16 0.018 252);
+  --foreground: oklch(0.96 0.008 250);
+  --card: oklch(0.22 0.022 258);
+  --card-foreground: oklch(0.96 0.008 250);
+  --popover: oklch(0.22 0.022 258);
+  --popover-foreground: oklch(0.96 0.008 250);
+  --primary: oklch(0.78 0.2 148);
+  --primary-foreground: oklch(0.14 0.02 148);
+  --primary-glow: oklch(0.86 0.21 148);
+  --secondary: oklch(0.27 0.022 258);
+  --secondary-foreground: oklch(0.96 0.008 250);
+  --muted: oklch(0.25 0.02 258);
+  --muted-foreground: oklch(0.68 0.02 250);
+  --accent: oklch(0.7 0.18 258);
+  --accent-foreground: oklch(0.99 0 0);
   --destructive: oklch(0.65 0.22 25);
   --destructive-foreground: oklch(0.98 0 0);
   --success: oklch(0.82 0.2 150);
@@ -163,7 +165,16 @@
 @layer utilities {
   .glow-primary {
     box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 40%, transparent),
-      0 0 30px -5px color-mix(in oklab, var(--primary) 50%, transparent);
+      0 0 40px -8px color-mix(in oklab, var(--primary) 55%, transparent);
+  }
+  .glow-accent {
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 40%, transparent),
+      0 0 40px -8px color-mix(in oklab, var(--accent) 55%, transparent);
+  }
+  .glow-card {
+    box-shadow:
+      0 1px 0 0 color-mix(in oklab, var(--foreground) 4%, transparent) inset,
+      0 8px 24px -12px color-mix(in oklab, var(--foreground) 25%, transparent);
   }
   .grid-bg {
     background-image:
@@ -171,10 +182,34 @@
       linear-gradient(to bottom, color-mix(in oklab, var(--border) 60%, transparent) 1px, transparent 1px);
     background-size: 32px 32px;
   }
+  .dot-bg {
+    background-image: radial-gradient(color-mix(in oklab, var(--border) 80%, transparent) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
   .text-gradient-primary {
-    background: linear-gradient(135deg, var(--primary), color-mix(in oklab, var(--primary) 60%, var(--chart-2)));
+    background: linear-gradient(135deg, var(--primary), color-mix(in oklab, var(--accent) 80%, var(--primary)));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
+  .text-gradient-accent {
+    background: linear-gradient(135deg, var(--accent), color-mix(in oklab, var(--primary) 60%, var(--accent)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .bg-gradient-hero {
+    background:
+      radial-gradient(60% 80% at 10% 0%, color-mix(in oklab, var(--primary) 18%, transparent) 0%, transparent 60%),
+      radial-gradient(50% 70% at 100% 100%, color-mix(in oklab, var(--accent) 18%, transparent) 0%, transparent 60%),
+      var(--card);
+  }
+  .ring-soft {
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--border) 80%, transparent);
+  }
+  @keyframes pulse-ring {
+    0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--primary) 40%, transparent); }
+    50% { box-shadow: 0 0 0 6px color-mix(in oklab, var(--primary) 0%, transparent); }
+  }
+  .animate-pulse-ring { animation: pulse-ring 2.4s ease-in-out infinite; }
 }
