@@ -263,4 +263,3 @@ function StatCard({
     </motion.div>
   );
 }
-<Sparkles className="hidden" />
