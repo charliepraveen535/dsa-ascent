@@ -251,7 +251,7 @@ function ChatBubble({ msg }: { msg: ChatMsg }) {
         {isUser ? (
           <p className="text-sm whitespace-pre-wrap break-words">{msg.content}</p>
         ) : (
-          <article className="prose prose-sm dark:prose-invert max-w-none">
+          <article className="prose prose-sm dark:prose-invert max-w-none w-full min-w-0 break-words [overflow-wrap:anywhere] [&_pre]:overflow-x-auto [&_pre]:max-w-full [&_pre]:whitespace-pre [&_code]:break-words [&_code]:whitespace-pre-wrap [&_pre_code]:whitespace-pre [&_table]:block [&_table]:overflow-x-auto">
             <ReactMarkdown>{msg.content}</ReactMarkdown>
           </article>
         )}
