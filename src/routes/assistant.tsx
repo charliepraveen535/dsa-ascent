@@ -180,8 +180,8 @@ function DoubtSolver() {
   ];
 
   return (
-    <Card className="border border-border bg-card flex flex-col h-[68vh] min-h-[480px]">
-      <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4">
+    <Card className="border border-border bg-card flex flex-col h-[68vh] min-h-[480px] overflow-hidden min-w-0">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-4 min-w-0">
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center">
             <Bot className="size-8 text-primary mb-3" />
