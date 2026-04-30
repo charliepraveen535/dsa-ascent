@@ -82,7 +82,7 @@ function QuestionGenerator() {
   };
 
   return (
-    <Card className="p-5 border border-border bg-card">
+    <Card className="p-4 sm:p-5 border border-border bg-card overflow-hidden min-w-0">
       <div className="grid gap-3 md:grid-cols-[1fr_180px_auto]">
         <div>
           <label className="text-xs uppercase tracking-widest text-muted-foreground font-mono">Topic</label>
@@ -114,9 +114,9 @@ function QuestionGenerator() {
         </div>
       </div>
 
-      <div className="mt-5">
+      <div className="mt-5 min-w-0">
         {content ? (
-          <article className="prose prose-sm dark:prose-invert max-w-none rounded-md border border-border bg-muted/30 p-5">
+          <article className="prose prose-sm dark:prose-invert max-w-none w-full min-w-0 rounded-md border border-border bg-muted/30 p-4 sm:p-5 break-words [overflow-wrap:anywhere] [&_pre]:overflow-x-auto [&_pre]:max-w-full [&_pre]:whitespace-pre [&_code]:break-words [&_code]:whitespace-pre-wrap [&_pre_code]:whitespace-pre [&_table]:block [&_table]:overflow-x-auto">
             <ReactMarkdown>{content}</ReactMarkdown>
           </article>
         ) : (
@@ -233,7 +233,7 @@ function DoubtSolver() {
 function ChatBubble({ msg }: { msg: ChatMsg }) {
   const isUser = msg.role === "user";
   return (
-    <div className={cn("flex gap-3", isUser && "flex-row-reverse")}>
+    <div className={cn("flex gap-3 min-w-0", isUser && "flex-row-reverse")}>
       <div
         className={cn(
           "size-8 shrink-0 rounded-md grid place-items-center border",
@@ -244,14 +244,14 @@ function ChatBubble({ msg }: { msg: ChatMsg }) {
       </div>
       <div
         className={cn(
-          "rounded-md px-4 py-3 max-w-[85%] border",
+          "rounded-md px-4 py-3 max-w-[85%] min-w-0 border break-words [overflow-wrap:anywhere]",
           isUser ? "bg-primary/10 border-primary/30" : "bg-muted/40 border-border",
         )}
       >
         {isUser ? (
-          <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
+          <p className="text-sm whitespace-pre-wrap break-words">{msg.content}</p>
         ) : (
-          <article className="prose prose-sm dark:prose-invert max-w-none">
+          <article className="prose prose-sm dark:prose-invert max-w-none w-full min-w-0 break-words [overflow-wrap:anywhere] [&_pre]:overflow-x-auto [&_pre]:max-w-full [&_pre]:whitespace-pre [&_code]:break-words [&_code]:whitespace-pre-wrap [&_pre_code]:whitespace-pre [&_table]:block [&_table]:overflow-x-auto">
             <ReactMarkdown>{msg.content}</ReactMarkdown>
           </article>
         )}
