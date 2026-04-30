@@ -114,9 +114,9 @@ function QuestionGenerator() {
         </div>
       </div>
 
-      <div className="mt-5">
+      <div className="mt-5 min-w-0">
         {content ? (
-          <article className="prose prose-sm dark:prose-invert max-w-none rounded-md border border-border bg-muted/30 p-5">
+          <article className="prose prose-sm dark:prose-invert max-w-none w-full min-w-0 rounded-md border border-border bg-muted/30 p-4 sm:p-5 break-words [overflow-wrap:anywhere] [&_pre]:overflow-x-auto [&_pre]:max-w-full [&_pre]:whitespace-pre [&_code]:break-words [&_code]:whitespace-pre-wrap [&_pre_code]:whitespace-pre [&_table]:block [&_table]:overflow-x-auto">
             <ReactMarkdown>{content}</ReactMarkdown>
           </article>
         ) : (
