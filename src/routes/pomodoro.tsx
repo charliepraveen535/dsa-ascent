@@ -147,58 +147,71 @@ function PomodoroPage() {
     <AppShell>
       <header className="mb-6">
         <p className="text-xs uppercase tracking-widest text-primary font-mono">$ pomodoro --focus</p>
-        <h1 className="text-3xl md:text-4xl font-bold mt-2">Pomodoro Timer</h1>
+        <h1 className="text-3xl md:text-4xl font-bold mt-2 font-display tracking-tight">Pomodoro Timer</h1>
         <p className="text-muted-foreground mt-2 max-w-2xl">
           Deep work in focused intervals. Solve, breathe, repeat.
         </p>
       </header>
 
       <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
-        <Card className="p-6 md:p-8 border border-border bg-card">
-          <ModeTabs mode={mode} setMode={(m) => { setRunning(false); setMode(m); }} />
+        <Card className="p-6 md:p-10 border border-border bg-card rounded-2xl relative overflow-hidden">
+          <div className="absolute -top-32 -right-32 size-96 rounded-full bg-primary/5 blur-3xl pointer-events-none" />
+          <div className="relative">
+            <ModeTabs mode={mode} setMode={(m) => { setRunning(false); setMode(m); }} />
 
-          <div className="mt-8 flex flex-col items-center">
-            <Ring progress={progress} accentClass={accent}>
-              <div className="text-center">
-                <div className={cn("font-mono font-bold tabular-nums text-6xl md:text-7xl", accent)}>
-                  {formatTime(secondsLeft)}
+            <div className="mt-10 flex flex-col items-center">
+              <Ring progress={progress} accentClass={accent} running={running}>
+                <div className="text-center">
+                  <div className={cn("font-mono font-bold tabular-nums text-6xl md:text-7xl", accent)}>
+                    {formatTime(secondsLeft)}
+                  </div>
+                  <div className="mt-2 text-xs uppercase tracking-widest text-muted-foreground font-mono">
+                    {mode === "focus" ? "focus session" : mode === "short" ? "short break" : "long break"}
+                  </div>
                 </div>
-                <div className="mt-2 text-xs uppercase tracking-widest text-muted-foreground font-mono">
-                  {mode === "focus" ? "focus session" : mode === "short" ? "short break" : "long break"}
-                </div>
+              </Ring>
+
+              <div className="mt-10 flex items-center gap-2">
+                <Button size="lg" onClick={() => setRunning((r) => !r)} className="min-w-32 rounded-xl">
+                  {running ? <Pause className="size-4" /> : <Play className="size-4" />}
+                  {running ? "Pause" : "Start"}
+                </Button>
+                <Button size="lg" variant="outline" onClick={reset} aria-label="Reset" className="rounded-xl">
+                  <RotateCcw className="size-4" />
+                </Button>
+                <Button size="lg" variant="outline" onClick={skip} aria-label="Skip" className="rounded-xl">
+                  <SkipForward className="size-4" />
+                </Button>
               </div>
-            </Ring>
-
-            <div className="mt-8 flex items-center gap-2">
-              <Button size="lg" onClick={() => setRunning((r) => !r)} className="min-w-32">
-                {running ? <Pause className="size-4" /> : <Play className="size-4" />}
-                {running ? "Pause" : "Start"}
-              </Button>
-              <Button size="lg" variant="outline" onClick={reset} aria-label="Reset">
-                <RotateCcw className="size-4" />
-              </Button>
-              <Button size="lg" variant="outline" onClick={skip} aria-label="Skip">
-                <SkipForward className="size-4" />
-              </Button>
             </div>
           </div>
         </Card>
 
         <div className="space-y-4">
-          <Card className="p-5 border border-border bg-card">
+          <Card className="p-5 border border-border bg-card rounded-2xl">
             <h3 className="text-xs uppercase tracking-widest text-muted-foreground font-mono">Stats</h3>
             <div className="mt-3 flex items-end justify-between">
               <div>
-                <div className="text-4xl font-bold tabular-nums">{completed}</div>
+                <div className="text-4xl font-bold tabular-nums font-mono">{completed}</div>
                 <div className="text-xs text-muted-foreground mt-1">Focus sessions completed</div>
               </div>
-              <Button size="sm" variant="ghost" onClick={() => setCompleted(0)}>
+              <Button size="sm" variant="ghost" onClick={() => setCompleted(0)} className="rounded-xl">
                 Reset
               </Button>
             </div>
+            <div className="mt-4 pt-4 border-t border-border grid grid-cols-2 gap-3 text-center">
+              <div>
+                <div className="text-lg font-bold font-mono">{Math.round(completed * settings.focus / 60 * 10) / 10}h</div>
+                <div className="text-[10px] uppercase tracking-widest text-muted-foreground">total focus</div>
+              </div>
+              <div>
+                <div className="text-lg font-bold font-mono">{Math.floor(completed / settings.longEvery)}</div>
+                <div className="text-[10px] uppercase tracking-widest text-muted-foreground">long breaks</div>
+              </div>
+            </div>
           </Card>
 
-          <Card className="p-5 border border-border bg-card">
+          <Card className="p-5 border border-border bg-card rounded-2xl">
             <h3 className="text-xs uppercase tracking-widest text-muted-foreground font-mono">Settings (minutes)</h3>
             <div className="mt-3 grid gap-3">
               <SettingRow label="Focus" value={settings.focus} onChange={(v) => setSettings((s) => ({ ...s, focus: v }))} />
@@ -276,20 +289,28 @@ function ModeTabs({ mode, setMode }: { mode: Mode; setMode: (m: Mode) => void })
 function Ring({
   progress,
   accentClass,
+  running,
   children,
 }: {
   progress: number;
   accentClass: string;
+  running: boolean;
   children: React.ReactNode;
 }) {
-  const size = 280;
-  const stroke = 10;
+  const size = 300;
+  const stroke = 12;
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
   const offset = c * (1 - Math.min(1, Math.max(0, progress)));
   return (
-    <div className="relative" style={{ width: size, height: size }}>
+    <div className={cn("relative rounded-full", running && "animate-pulse-ring")} style={{ width: size, height: size }}>
       <svg width={size} height={size} className="-rotate-90">
+        <defs>
+          <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="oklch(0.78 0.2 148)" />
+            <stop offset="100%" stopColor="oklch(0.7 0.18 258)" />
+          </linearGradient>
+        </defs>
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -306,7 +327,7 @@ function Ring({
           strokeDasharray={c}
           strokeDashoffset={offset}
           className={cn("fill-none transition-[stroke-dashoffset] duration-1000 ease-linear", accentClass)}
-          stroke="currentColor"
+          stroke="url(#ringGrad)"
         />
       </svg>
       <div className="absolute inset-0 grid place-items-center">{children}</div>
