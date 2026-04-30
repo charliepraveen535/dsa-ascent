@@ -289,20 +289,28 @@ function ModeTabs({ mode, setMode }: { mode: Mode; setMode: (m: Mode) => void })
 function Ring({
   progress,
   accentClass,
+  running,
   children,
 }: {
   progress: number;
   accentClass: string;
+  running: boolean;
   children: React.ReactNode;
 }) {
-  const size = 280;
-  const stroke = 10;
+  const size = 300;
+  const stroke = 12;
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
   const offset = c * (1 - Math.min(1, Math.max(0, progress)));
   return (
-    <div className="relative" style={{ width: size, height: size }}>
+    <div className={cn("relative rounded-full", running && "animate-pulse-ring")} style={{ width: size, height: size }}>
       <svg width={size} height={size} className="-rotate-90">
+        <defs>
+          <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="oklch(0.78 0.2 148)" />
+            <stop offset="100%" stopColor="oklch(0.7 0.18 258)" />
+          </linearGradient>
+        </defs>
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -319,7 +327,7 @@ function Ring({
           strokeDasharray={c}
           strokeDashoffset={offset}
           className={cn("fill-none transition-[stroke-dashoffset] duration-1000 ease-linear", accentClass)}
-          stroke="currentColor"
+          stroke="url(#ringGrad)"
         />
       </svg>
       <div className="absolute inset-0 grid place-items-center">{children}</div>
